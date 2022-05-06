@@ -1,0 +1,1 @@
+﻿add_library(darp STATIC    "RoutePlanner.h" "RoutePlanner.cpp" "BruteSDARP.h" "BruteSDARP.cpp" "Graph.h" "Graph.cpp" "DarpSolver.h" "DarpSolver.cpp" "DarpSolverBF.h" "DarpSolverBF.cpp"  "Helpers.h" "Helpers.cpp")
