@@ -1,6 +1,7 @@
 #pragma once
 #include "DarpSolverBF.h"
 #include "HACsingle.h"
+#include "HACcomplete.h"
 class DarpSolverHAC: public DarpSolverBF
 {
 	// Inherited via DarpSolver
@@ -10,5 +11,5 @@ public:
 	typedef std::tr1::shared_ptr<DarpSolverHAC> Ptr;
 	virtual void makeAssignments() override;
 private:
-	HACsingle hac;
+	HACcomplete hac;
 };
