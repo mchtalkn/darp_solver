@@ -15,6 +15,6 @@ public:
 	virtual void makeAssignments() override;
 
 	virtual DarpSolver::Ptr copy() override;
-private:
+protected:
 	Graph graph;
 };

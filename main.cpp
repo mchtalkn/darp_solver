@@ -1,5 +1,6 @@
 #include <iostream>
 #include "DarpSolverBF.h"
+#include "DarpSolverHAC.h"
 #include <math.h>
 #include <fstream>
 #include <Helpers.h>
@@ -14,7 +15,10 @@ int main() {
 	vector<int> agentNodeIds = readAgentNodesFromFile(f);
 
 	DarpSolverBF dsbf(tasks,agentNodeIds,g);
+	DarpSolverHAC dshc(tasks, agentNodeIds, g);
 	dsbf.solve();
-	auto r = dsbf.getRoutes();
+	dshc.solve();
+	auto r1 = dsbf.getRoutes();
+	auto r2 = dshc.getRoutes();
 	int bp = 0;
 }
