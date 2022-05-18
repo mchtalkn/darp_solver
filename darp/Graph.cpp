@@ -13,7 +13,7 @@ const std::vector<edge>& Node::getOutEdges() const
     return out_edges;
 }
 
-Node::Node(int id_, const std::vector<edge>& out_edges_): id(id_),out_edges(out_edges_)
+Node::Node(int id_, const std::vector<edge>& out_edges_,int x_, int y_): id(id_),out_edges(out_edges_),x(x_),y(y_)
 {
 }
 
@@ -38,6 +38,8 @@ Graph::Graph(std::ifstream& f)
     int n;
     f >> n;
     for (int i = 0; i < n; i++) {
+        int x, y;
+        f >> x >> y;
         for (int j = 0; j < n; j++) {
             float cost;
             f >> cost;
