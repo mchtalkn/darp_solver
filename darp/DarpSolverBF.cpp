@@ -30,7 +30,7 @@ void DarpSolverBF::makeAssignments()
 			tasks[t.first].push_back(t.second);
 		}
 		for (int i = 0; i < agentNodeIds.size(); i++) {
-			Node n(agentNodeIds[i], vector<edge>());
+			Node n=graph.getNode(agentNodeIds[i]);
 			BruteSDARP router(graph, tasks[i],n);
 			router.calculate_route();
 			auto route = router.getRoute();
@@ -42,7 +42,7 @@ void DarpSolverBF::makeAssignments()
 		}
 	}
 	for (int i = 0; i < agentNodeIds.size(); i++) {
-		Node n(agentNodeIds[i], vector<edge>());
+		Node n = graph.getNode(agentNodeIds[i]);
 		BruteSDARP::Ptr p(new BruteSDARP(graph, bestSplit[i],n));
 		planners.push_back(p);
 	}
