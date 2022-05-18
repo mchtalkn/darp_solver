@@ -3,7 +3,7 @@
 #include "RoutePlanner.h"
 #include <vector>
 #include <memory>
-
+#include <functional>
 struct task_tree {
 	task* t = nullptr;
 	float distance = 0;
@@ -18,7 +18,15 @@ class HAC
 {
 public:
 	HAC(const Graph& g_, const std::vector<task> tasks_);
-	virtual float calculate_distance(const std::vector<task>& cluster1, const std::vector<task>cluster2) = 0;
+	std::function<float (const HAC&,const std::vector<task>& , const std::vector<task>)> calculate_cluster_distance;
+	std::function<float(const HAC&,const task entity1, const task entity2)> calculate_entity_distance;
+	float ced_min_sg(const task entity1, const task entity2) const;
+	float ced_max_sg(const task entity1, const task entity2) const;
+	float ced_middle(const task entity1, const task entity2) const;
+	float ccd_single(const std::vector<task>& cluster1, const std::vector<task>& cluster2) const;
+	float ccd_complete(const std::vector<task>& cluster1, const std::vector<task>cluster2) const;
+	float ccd_average(const std::vector<task>& cluster1, const std::vector<task>cluster2) const;
+
 	void calculate_clusters();
 	std::vector<std::vector<task>> get_cluster(int n);
 private:
