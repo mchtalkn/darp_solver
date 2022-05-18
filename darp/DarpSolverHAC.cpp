@@ -4,6 +4,10 @@
 
 DarpSolverHAC::DarpSolverHAC(const std::vector<task>& tasks_, const std::vector<int> agentNodeIds_, const Graph& g_):DarpSolverBF(tasks_,agentNodeIds_,g_),hac(g_,tasks_)
 {
+	for (int a : agentNodeIds) {
+		task t(a,a);
+		hac.add_task(t);
+	}
 }
 
 void DarpSolverHAC::set_hac_properties(const string& clustering, const string& distance)
@@ -39,10 +43,18 @@ void DarpSolverHAC::set_hac_properties(const string& clustering, const string& d
 void DarpSolverHAC::makeAssignments()
 {
 	hac.calculate_clusters();
-	vector<vector<task>> bestSplit = hac.get_cluster(agentNodeIds.size());
-	for (int i = 0; i < agentNodeIds.size(); i++) {
-		Node n = graph.getNode(agentNodeIds[i]);
-		BruteSDARP::Ptr p(new BruteSDARP(graph, bestSplit[i], n));
+	vector<vector<task>> bestSplit = hac.get_cluster();
+	for (const vector<task>& split :bestSplit ) {
+		vector<task> s;
+		int agent = -1;
+		for (const task& t : split) {
+			
+			if (t.pickupNode == t.deliverNode) {
+				agent = t.pickupNode;
+			}
+			else s.push_back(t);
+		}
+		BruteSDARP::Ptr p(new BruteSDARP(graph, s, graph.getNode(agent)));
 		planners.push_back(p);
 	}
 }

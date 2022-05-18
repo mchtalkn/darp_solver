@@ -36,6 +36,7 @@ float HAC::ccd_single(const std::vector<task>& cluster1, const std::vector<task>
     float min_cost = INFINITY;
     for (const task& t : cluster1) {
         for (const task& t2 : cluster2) {
+            if (t.pickupNode == t.deliverNode && t2.pickupNode == t2.deliverNode) return INFINITY;
             min_cost = min(min_cost,calculate_entity_distance(*this,t,t2));
         }
     }
@@ -47,6 +48,7 @@ float HAC::ccd_complete(const std::vector<task>& cluster1, const std::vector<tas
     float max_cost = -1;
     for (const task& t : cluster1) {
         for (const task& t2 : cluster2) {
+            if (t.pickupNode == t.deliverNode && t2.pickupNode == t2.deliverNode) return INFINITY;
             max_cost = max(max_cost,calculate_entity_distance(*this, t, t2));
         }
     }
@@ -60,6 +62,7 @@ float HAC::ccd_average(const std::vector<task>& cluster1, const std::vector<task
     int count = 0;
     for (const task& t : cluster1) {
         for (const task& t2 : cluster2) {
+            if (t.pickupNode == t.deliverNode && t2.pickupNode == t2.deliverNode) return INFINITY;
             total += calculate_entity_distance(*this, t, t2);
             count++;
         }
@@ -70,12 +73,15 @@ float HAC::ccd_average(const std::vector<task>& cluster1, const std::vector<task
 void HAC::calculate_clusters()
 {
     is_calculated = true;
-    vector<task_tree*> forrest;
+    for (task_tree* t : forrest) {
+        delete t;
+    }
+    forrest.clear();
     for (task& t : tasks) {
         task_tree* tp = new task_tree(t,g.getEdgeCost(t.pickupNode,t.deliverNode));
         forrest.push_back(tp);
-        all_nodes.push_back(tp);
     }
+    
     while (forrest.size() > 1)
     {
         int mini = -1, minj = -1;
@@ -90,29 +96,30 @@ void HAC::calculate_clusters()
                 }
             }
         }
-
+        if (mincost == INFINITY) {
+            int bp = 0;
+            break;
+        }
         task_tree* new_tree = new task_tree({forrest[mini],forrest[minj]}, forrest[mini]->distance + forrest[minj]->distance + mincost);
         forrest.erase(forrest.begin() + minj);
         forrest.erase(forrest.begin() + mini);
         forrest.push_back(new_tree);
-        all_nodes.push_back(new_tree);
     }
-    tree = forrest[0];
-
-    sort(all_nodes.begin(), all_nodes.end(), [](const task_tree* a, const task_tree* b) {
-        return a->distance > b->distance;
-        });
 }
 
-std::vector<std::vector<task>> HAC::get_cluster(int n) 
+void HAC::add_task(const task& t)
 {
-    vector<task_tree*> parents;
+    is_calculated = false;
+    tasks.push_back(t);
+}
+
+std::vector<std::vector<task>> HAC::get_cluster() 
+{
     vector<vector<task>> res;
     if (!is_calculated) calculate_clusters();
-    for (int i = 0; i < n -1; i++) {
-        parents.push_back(all_nodes[i]);
+    for (const task_tree* const t:forrest) {
+        res.push_back(t->get_leaves());
     }
-    get_cluster_helper(res,tree,parents);
     return res;
 }
 void get_cluster_helper(vector<vector<task>>& res ,const task_tree* t, const vector<task_tree*> parents)

@@ -28,9 +28,11 @@ public:
 	float ccd_average(const std::vector<task>& cluster1, const std::vector<task>cluster2) const;
 
 	void calculate_clusters();
-	std::vector<std::vector<task>> get_cluster(int n);
+	void add_task(const task& t);
+	std::vector<std::vector<task>> get_cluster();
 private:
 protected:
+	std::vector<task_tree*> forrest;
 	bool is_calculated = false;
 	Graph g;
 	std::vector<task> tasks;
