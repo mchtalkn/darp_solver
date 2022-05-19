@@ -38,14 +38,14 @@ class Node
 {
 public:
 
-	Node(int id_, const std::vector<edge>& out_edges_,int x, int y);
+	Node(int id_, const std::vector<edge>& out_edges_,float x, float y);
 	void addEdge(const edge& e);
 	int getId() const;
 	const std::vector<edge>& getOutEdges() const;
-	Node(int id_) :id(id_) {}
+	Node(int id_) :id(id_),x(-1),y(-1) {}
 	bool operator ==(const Node& rhs) const;
 	bool doesExists() const;
-	int x, y;
+	float x, y;
 private:
 	int id;
 	std::vector<edge> out_edges;

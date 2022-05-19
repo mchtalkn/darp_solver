@@ -13,7 +13,7 @@ const std::vector<edge>& Node::getOutEdges() const
     return out_edges;
 }
 
-Node::Node(int id_, const std::vector<edge>& out_edges_,int x_, int y_): id(id_),out_edges(out_edges_),x(x_),y(y_)
+Node::Node(int id_, const std::vector<edge>& out_edges_,float x_, float y_): id(id_),out_edges(out_edges_),x(x_),y(y_)
 {
 }
 
