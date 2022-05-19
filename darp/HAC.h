@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <functional>
+#include <string>
 struct task_tree {
 	task* t = nullptr;
 	float distance = 0;
@@ -23,10 +24,12 @@ public:
 	float ced_min_sg(const task entity1, const task entity2) const;
 	float ced_max_sg(const task entity1, const task entity2) const;
 	float ced_middle(const task entity1, const task entity2) const;
+	float ced_average(const task entity1, const task entity2) const;
 	float ccd_single(const std::vector<task>& cluster1, const std::vector<task>& cluster2) const;
 	float ccd_complete(const std::vector<task>& cluster1, const std::vector<task>cluster2) const;
 	float ccd_average(const std::vector<task>& cluster1, const std::vector<task>cluster2) const;
-
+	const static std::vector<std::string>entity_distances;
+	const static std::vector<std::string>linkages;
 	void calculate_clusters();
 	void add_task(const task& t);
 	std::vector<std::vector<task>> get_cluster();

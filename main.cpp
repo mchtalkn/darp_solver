@@ -25,8 +25,8 @@ int main() {
 		max_cost = max(max_cost, r.cost);
 	}
 	printf(" brute force total cost %.0f max cost %.0f \n", total_cost, max_cost);
-	for (const string& c : clustering) {
-		for (const string& d : distances) {
+	for (const string& c : HAC::linkages) {
+		for (const string& d : HAC::entity_distances) {
 			total_cost = 0;
 			max_cost = 0;
 			DarpSolverHAC dshc(tasks, agentNodeIds, g);
@@ -38,8 +38,6 @@ int main() {
 				max_cost = max(max_cost, r.cost);
 			}
 			printf(" HAC %s %s total cost %.0f max cost %.0f \n", c.c_str(), d.c_str(), total_cost, max_cost);
-
-
 		}
 	}
 	int bp = 0;

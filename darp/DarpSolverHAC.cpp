@@ -34,6 +34,9 @@ void DarpSolverHAC::set_hac_properties(const string& clustering, const string& d
 	else if (distance == "middle") {
 		hac.calculate_entity_distance = &HAC::ced_middle;
 	}
+	else if (distance == "average_sg") {
+		hac.calculate_entity_distance = &HAC::ced_average;
+	}
 	else {
 		cerr << "distance calculation " << distance << " couldnt recognized" << endl;
 		exit(-1);

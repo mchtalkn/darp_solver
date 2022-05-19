@@ -1,6 +1,8 @@
 #include "HAC.h"
 #include <algorithm>
 using namespace std;
+const std::vector<std::string> HAC::entity_distances({"min_sg","max_sg","average_sg","middle"});
+const std::vector<std::string> HAC::linkages({"single","complete","average"});
 HAC::HAC(const Graph& g_, const std::vector<task> tasks_):g(g_),tasks(tasks_)
 {
     
@@ -29,6 +31,11 @@ float HAC::ced_middle(const task t1, const task t2) const
     mx2 = (t2p.x + t2d.x) * 0.5;
     my2 = (t2p.y + t2d.y) * 0.5;
     return sqrtf((mx1 - mx2) * (mx1 - mx2) + (my1 - my2) * (my1 - my2));
+}
+
+float HAC::ced_average(const task t, const task t2) const
+{
+    return (g.getEdgeCost(t.deliverNode, t2.pickupNode)+ g.getEdgeCost(t2.deliverNode, t.pickupNode))/2;
 }
 
 float HAC::ccd_single(const std::vector<task>& cluster1, const std::vector<task>& cluster2) const
