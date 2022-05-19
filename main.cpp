@@ -4,6 +4,7 @@
 #include <math.h>
 #include <fstream>
 #include <Helpers.h>
+#include "Kmeans.h"
 using namespace std;
 int main() {
 	string clustering[3] = {"single","complete","average"};
@@ -40,5 +41,7 @@ int main() {
 			printf(" HAC %s %s total cost %.0f max cost %.0f \n", c.c_str(), d.c_str(), total_cost, max_cost);
 		}
 	}
+	Kmeans km(g,tasks,3);
+	auto k = km.get_cluster();
 	int bp = 0;
 }
