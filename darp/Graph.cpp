@@ -40,6 +40,8 @@ Graph::Graph(std::ifstream& f)
     for (int i = 0; i < n; i++) {
         int x, y;
         f >> x >> y;
+        const std::vector<edge> out_edges;
+        addNode(Node(i,out_edges , x, y));
         for (int j = 0; j < n; j++) {
             float cost;
             f >> cost;
@@ -100,11 +102,7 @@ void Graph::addEdge(const edge& e)
         nodes.push_back(dummy);
     }
     else (*p).addEdge(e);
-    dummy = Node(e.to);
-    p = find(nodes.begin(), nodes.end(), dummy);
-    if (p == nodes.end()) {
-        nodes.push_back(dummy);
-    }
+
 
 }
 
