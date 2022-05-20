@@ -5,6 +5,7 @@
 #include <fstream>
 #include <Helpers.h>
 #include "Kmeans.h"
+#include "DarpSolverKmeans.h"
 using namespace std;
 int main() {
 	string clustering[3] = {"single","complete","average"};
@@ -41,7 +42,17 @@ int main() {
 			printf(" HAC %s %s total cost %.0f max cost %.0f \n", c.c_str(), d.c_str(), total_cost, max_cost);
 		}
 	}
-	Kmeans km(g,tasks,3);
-	auto k = km.get_cluster();
+	total_cost = 0;
+	max_cost = 0;
+
+	DarpSolverKmeans dskm(tasks,agentNodeIds,g);
+	dskm.solve();
+	for (auto& r : r1) {
+		total_cost += r.cost;
+		max_cost = max(max_cost, r.cost);
+	}
+	printf(" Kmeans total cost %.0f max cost %.0f \n", total_cost, max_cost);
+
+	r1 = dskm.getRoutes();
 	int bp = 0;
 }
