@@ -1,6 +1,6 @@
 #include "DarpSolverHAC.h"
 #include "BruteSDARP.h"
-
+#include "GreedySDARP.h"
 
 DarpSolverHAC::DarpSolverHAC(const std::vector<task>& tasks_, const std::vector<int> agentNodeIds_, const Graph& g_):DarpSolverBF(tasks_,agentNodeIds_,g_),hac(g_,tasks_)
 {
@@ -10,7 +10,7 @@ DarpSolverHAC::DarpSolverHAC(const std::vector<task>& tasks_, const std::vector<
 	}
 }
 
-void DarpSolverHAC::set_hac_properties(const string& clustering, const string& distance)
+void DarpSolverHAC::set_hac_properties(const string& clustering, const string& distance,const string& route_planner_)
 {
 	if (clustering == "single") {
 		hac.calculate_cluster_distance = &HAC::ccd_single;
@@ -41,6 +41,9 @@ void DarpSolverHAC::set_hac_properties(const string& clustering, const string& d
 		cerr << "distance calculation " << distance << " couldnt recognized" << endl;
 		exit(-1);
 	}
+	if (route_planner_ == "brute" || route_planner_ == "greedy") {
+		route_planner = route_planner_;
+	}
 }
 
 void DarpSolverHAC::makeAssignments()
@@ -57,7 +60,13 @@ void DarpSolverHAC::makeAssignments()
 			}
 			else s.push_back(t);
 		}
-		BruteSDARP::Ptr p(new BruteSDARP(graph, s, graph.getNode(agent)));
+		RoutePlanner::Ptr p;
+		if (route_planner == "brute") {
+			p = BruteSDARP::Ptr(new BruteSDARP(graph, s, graph.getNode(agent)));
+		}
+		else if (route_planner == "greedy") {
+			p = GreedySDARP::Ptr(new GreedySDARP(graph, s, graph.getNode(agent)));
+		}
 		planners.push_back(p);
 	}
 }

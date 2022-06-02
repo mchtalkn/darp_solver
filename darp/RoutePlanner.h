@@ -29,6 +29,7 @@ public:
 	virtual void calculate_route() = 0;
 	virtual route getRoute() = 0;
 	virtual Ptr clone() const = 0;
+	const static std::vector < std::string> route_planners;
 protected:
 	route calculated_route;
 	std::vector<task> tasks;

@@ -1,4 +1,6 @@
 #include "RoutePlanner.h"
+const std::vector < std::string> RoutePlanner::route_planners = {"brute","greedy"};
+
 route route::operator+(const route& rhs) const
 {
 	route r;
