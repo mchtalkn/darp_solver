@@ -4,9 +4,11 @@
 #include <exception>
 #include <string>
 #include <iostream>
+#include <math.h>
 struct EdgeNotFound : public std::exception
 {
 	int from, to;
+	
 	EdgeNotFound(int from, int to);
 	const char* what() const throw ()
 	{
@@ -56,7 +58,7 @@ private:
 class Graph
 {
 public:
-	Graph(std::ifstream& f);
+	Graph(std::istream& f);
 	Graph(const std::vector<Node>& nodes, const std::vector<edge>& edges);
 	Graph(const std::vector<edge>& edges);
 	const Node& getNode (const int id) const;

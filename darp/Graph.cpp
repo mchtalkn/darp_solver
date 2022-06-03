@@ -33,7 +33,7 @@ bool Node::doesExists() const
 }
 
 
-Graph::Graph(std::ifstream& f)
+Graph::Graph(std::istream& f)
 {
     int n;
     f >> n;
