@@ -7,7 +7,7 @@ class DarpSolverHAC: public DarpSolverBF
 public:
 	DarpSolverHAC(const std::vector<task>& tasks, const std::vector<int> agentNodeIds, const Graph& g);
 	void set_hac_properties(const string& clustering, const string& distance, const string& route_planner = "brute");
-	typedef std::tr1::shared_ptr<DarpSolverHAC> Ptr;
+	typedef std::shared_ptr<DarpSolverHAC> Ptr;
 	virtual void makeAssignments() override;
 private:
 	HAC hac;

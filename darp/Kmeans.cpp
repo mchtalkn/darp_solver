@@ -1,6 +1,7 @@
 #include "Kmeans.h"
 #include <iostream>
 #include <math.h>
+#include <algorithm>
 using namespace std;
 const std::vector<std::string> Kmeans::entity_center_distances = { "cecd_r4" };
 const std::vector < std::string>Kmeans::center_assignments = { "ac_r4" };

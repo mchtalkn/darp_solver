@@ -9,8 +9,8 @@ class Kmeans
 private:
 	struct assigned_task {
 		const int id;
-		const Node const from;
-		const Node const to;
+		const Node from;
+		const Node to;
 		int assigned_cluster;
 		assigned_task(const int id_, const Node& from_, const Node& to_, const int assigned_cluster_) : id(id_), from(from_), to(to_), assigned_cluster(assigned_cluster_) {};
 	};

@@ -24,7 +24,7 @@ struct route
 class RoutePlanner
 {
 public:
-	typedef std::tr1::shared_ptr<RoutePlanner> Ptr;
+	typedef std::shared_ptr<RoutePlanner> Ptr;
 	RoutePlanner(const std::vector<task>& t);
 	virtual void calculate_route() = 0;
 	virtual route getRoute() = 0;
