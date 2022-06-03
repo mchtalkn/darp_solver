@@ -9,6 +9,7 @@ project ("CMakeProject1")
 add_executable (bftest "main.cpp")
 
 # TODO: Add tests and install targets if needed.
+set(CMAKE_CXX_FLAGS "-O3")
 
 add_subdirectory("darp")
 target_link_libraries(bftest darp)

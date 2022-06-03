@@ -9,7 +9,7 @@ struct size_missmatch : public std::exception
 {
 
 };
-std::vector<task> readTasksFromFile(ifstream& f)
+std::vector<task> readTasksFromFile(istream& f)
 {
 	std::vector<task> res;
 	int n;
@@ -23,7 +23,7 @@ std::vector<task> readTasksFromFile(ifstream& f)
 	} 
 	return res;
 }
-std::vector<int> readAgentNodesFromFile(std::ifstream& f)
+std::vector<int> readAgentNodesFromFile(std::istream& f)
 {
 	vector<int> res;
 	int n,id;

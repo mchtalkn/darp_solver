@@ -364,4 +364,6 @@ FodyWeavers.xsd
 
 **.inp
 **.exe
+**.out
+**.csv
 tmp
