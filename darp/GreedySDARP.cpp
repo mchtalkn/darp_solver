@@ -20,8 +20,13 @@ void GreedySDARP::calculate_route()
                 min_cost = cost;
             }
         }
-        calculated_route.path.push_back(edge(current.getId(), remaining[minid].pickupNode, graph.getEdgeCost(current.getId(), remaining[minid].pickupNode)));
-        calculated_route.path.push_back(edge(remaining[minid].pickupNode, remaining[minid].deliverNode, graph.getEdgeCost(remaining[minid].pickupNode, remaining[minid].deliverNode)));
+        edge e1(edge(current.getId(), remaining[minid].pickupNode, graph.getEdgeCost(current.getId(), remaining[minid].pickupNode)));
+
+        calculated_route.path.push_back(e1);
+        calculated_route.cost += e1.cost;
+        edge e2(edge(remaining[minid].pickupNode, remaining[minid].deliverNode, graph.getEdgeCost(remaining[minid].pickupNode, remaining[minid].deliverNode)));
+        calculated_route.path.push_back(e2);
+        calculated_route.cost += e2.cost;
         current = graph.getNode(remaining[minid].deliverNode);
         remaining.erase(remaining.begin()+minid);
 
