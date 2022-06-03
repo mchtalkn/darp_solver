@@ -13,8 +13,16 @@ void DarpSolverBF::addSolver(RoutePlanner::Ptr p)
 void DarpSolverBF::solve()
 {
 	float bestCost = INFINITY;
+	auto start = chrono::steady_clock::now();
 	makeAssignments();
+	auto end = chrono::steady_clock::now();
+	assignment_time = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+	start = chrono::steady_clock::now();
+
 	for (auto& s : planners) s->calculate_route();
+	end = chrono::steady_clock::now();
+	solution_time = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+
 }
 
 void DarpSolverBF::makeAssignments()
